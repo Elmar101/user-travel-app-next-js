@@ -4,8 +4,6 @@ import { Skeleton } from "@/components/ui/skeleton"
 import {
     Card,
     CardContent,
-    CardDescription,
-    CardFooter,
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
@@ -16,17 +14,18 @@ import { Button } from "@/components/ui/button"
 import {
     Form,
     FormControl,
-    FormDescription,
     FormField,
     FormItem,
     FormLabel,
     FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { IHotel } from '../models'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { ITrip } from '../../hotels/models'
 
 const filterSchema = z.object({
-    rating: z.string().optional(),
+name: z.string().min(3, "At least 3 chars").or(z.literal("")).optional(),
+
     priceMin: z.string().optional(),
     priceMax: z.string().optional(),
 });
@@ -34,38 +33,41 @@ const filterSchema = z.object({
 type FilterValues = z.infer<typeof filterSchema>;
 
 
-const HotelList = () => {
-    const [hotels, setHotels] = useState<IHotel[]>([]);
+const TripList = () => {
+    const [trips, setTrips] = useState<ITrip[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
+
+    const searchParams = useSearchParams();
+    const router = useRouter();
 
     const form = useForm<FilterValues>({
         resolver: zodResolver(filterSchema),
         defaultValues: {
-            rating: "",
+            name: "",
             priceMin: "",
             priceMax: "",
         },
     });
 
-    const fetchHotels = (filters: FilterValues = {}) => {
+    const fetchTrips = (filters: FilterValues = {}) => {
         setLoading(true);
         setError(false);
-        let url = "/api/hotels";
+        let url = "/api/trips";
         const params = new URLSearchParams();
 
-        if (filters.rating) params.append("rating", filters.rating);
+        if (filters.name) params.append("name", filters.name);
         if (filters.priceMin) params.append("priceMin", filters.priceMin);
         if (filters.priceMax) params.append("priceMax", filters.priceMax);
-        if (params.toString()) {
-            url += `?${params.toString()}`;
-        }
-   
+
+        url += "?" + params.toString();
+
         
+
         fetch(url)
             .then((res) => res.json())
             .then((data) => {
-                setHotels(data);
+                setTrips(data);
                 setLoading(false);
             })
             .catch((err) => {
@@ -77,19 +79,29 @@ const HotelList = () => {
     }
 
 
-    useEffect(() => {
-        fetchHotels();
-    }, []);
+   useEffect(() => {
+        const filters: FilterValues = {
+            name: searchParams.get("name") || "",
+            priceMin: searchParams.get("priceMin") || "",
+            priceMax: searchParams.get("priceMax") || "",
+          };
+        form.reset(filters);
+        fetchTrips(filters);
+    }, [searchParams]);
 
 
     function onSubmit(values: FilterValues) {
-        fetchHotels(values);
-    }
+        const params = new URLSearchParams();
+        if (values.name) params.set("name", values.name);
+        if (values.priceMin) params.set("priceMin", values.priceMin);
+        if (values.priceMax) params.set("priceMax", values.priceMax);
 
+        router.push(`/trips?${params.toString()}`);
+    }
 
     return (
         <div className="container mx-auto p-4">
-            <h1 className="text-2xl font-bold mb-4">Hotels</h1>
+            <h1 className="text-2xl font-bold mb-4">Trips</h1>
 
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)}
@@ -97,15 +109,13 @@ const HotelList = () => {
                 >
                     <FormField
                         control={form.control}
-                        name="rating"
+                        name="name"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Rating</FormLabel>
+                                <FormLabel>Name</FormLabel>
                                 <FormControl>
                                     <Input
-                                        type="number"
-                                        step="0.1"
-                                        placeholder="e.g., 4.5"
+                                        placeholder="name"
                                         {...field}
                                     />
                                 </FormControl>
@@ -148,16 +158,16 @@ const HotelList = () => {
                             </FormItem>
                         )}
                     />
-                    <Button type="submit" className='bg-gray-950 hover:bg-gray-800 cursor-pointer text-white'>Submit</Button>
+                     <Button type="submit" className='bg-gray-950 hover:bg-gray-800 cursor-pointer text-white'>Submit</Button>
                 </form>
             </Form>
             {loading && (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {Array.from({ length: 9 }).map((_, index) => (
-                        <Skeleton key={index} className='h-72 w-full rounded-lg bg-gray-100' />
-                    ))}
-                </div>
-            )}
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                {Array.from({ length: 9 }).map((_, index) => (
+                                    <Skeleton key={index} className='h-72 w-full rounded-lg bg-gray-100' />
+                                ))}
+                            </div>
+                        )}
 
             {error && (
                 <div className="text-center text-red-500 font-semibold">
@@ -165,30 +175,29 @@ const HotelList = () => {
                 </div>
             )}
 
-            {!loading && !error && hotels.length ===0 &&(
+            {!loading && !error && trips.length ===0 &&(
                  <div className="text-center text-blue-500 font-semibold">
-          No hotels found.
+          No trips found.
           </div>
             )}
 
             {!loading && !error && (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {hotels.map((hotel) => (
-                        <Card key={hotel.id} className="shadow-md">
+                    {trips.map((trip) => (
+                        <Card key={trip.id} className="shadow-md">
                             <CardHeader>
                                 <img
-                                    src={hotel.photos[0]}
-                                    alt={hotel.name}
+                                    src={trip.photos[0]}
+                                    alt={trip.name}
                                     className="w-full h-48 object-cover rounded"
                                 />
-                                <CardTitle className="text-lg font-semibold mt-2">{hotel.name}</CardTitle>
+                                <CardTitle className="text-lg font-semibold mt-2">{trip.name}</CardTitle>
                             </CardHeader>
                             <CardContent>
-                            <p className="text-gray-700">{hotel.rating} *</p>
+                            <p className="text-gray-700">Price: {trip.totalPrice} {trip.currency}</p>
 
-                                <p className="text-gray-700">{hotel.description}</p>
-                                <p className="text-sm text-gray-500">{hotel.location}</p>
-                                <p className="text-lg font-bold">${hotel.pricePerNight} / night</p>
+                                <p className="text-gray-700">Hotels: {trip?.tripHotels?.map((hotel) => hotel.hotelName).join(", ")}</p>
+                                <p className="text-sm text-gray-500">{trip.location}</p>
                             </CardContent>
                         </Card>
 
@@ -203,4 +212,4 @@ const HotelList = () => {
     )
 }
 
-export default HotelList
+export default TripList

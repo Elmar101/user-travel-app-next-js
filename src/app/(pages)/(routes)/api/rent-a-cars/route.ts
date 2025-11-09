@@ -3,14 +3,23 @@ import { NextResponse } from "next/server";
 
 export async function GET(req: Request) {
     const { searchParams } = new URL(req.url);
-    const rating = searchParams.get("rating");
+    const name = searchParams.get("name");
+    const seats = searchParams.get("seats");
+    console.log('seats', seats);
+    
     const priceMin = searchParams.get("priceMin");
     const priceMax = searchParams.get("priceMax");
+    console.log('priceMin', priceMin);
+    console.log('priceMax', priceMax);
 
-    const filters: any = [];
 
-    if (rating) {
-        filters.push({rating: {gte: Number(rating)}});
+    const filters: {name?: string; seats?: {equals?: number}; pricePerNight?: {gte?: number; lte?: number;}} []= [];
+ 
+    if (name) {
+        filters.push({name});
+    }
+    if (seats) {
+        filters.push({seats: {equals: Number(seats)}});
     }
     
     if (priceMin || priceMax) {
@@ -25,19 +34,21 @@ export async function GET(req: Request) {
         }
         filters.push({pricePerNight: priceFilter});
     }
-
-    
-
+   console.log('filters', filters);
     try {
-        const hotels = await prismadb.hotel.findMany({
+        const trips = await prismadb.rentaCar.findMany({
             where: filters.length === 0 ? {} : {
                 AND: filters,
             }, 
             include: {
-                rooms: true,
+                regionLinks: {
+                    include: {
+                        region: true,
+                    },
+                },
             },
         });
-        return NextResponse.json(hotels, { status: 200 });
+        return NextResponse.json(trips, { status: 200 });
     } catch (error) {
         return NextResponse.json({ message: "Something went wrong." }, { status: 500 });
     }

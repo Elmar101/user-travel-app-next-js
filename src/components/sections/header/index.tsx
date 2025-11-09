@@ -81,15 +81,15 @@ const Header = () => {
                     <div className='flex items-center space-x-4'>
                        <SearchPage/>
                        
-                       {"session".length ? (
+                       {/* {"session".length ? (
                         <Link  href="/profile" className="p-3 bg-red-400 cursor-pointer text-white rounded-full">
                             <UserPlus />
                         </Link>
-                       ):(
+                       ):( */}
                         <Link  href="/login" className="p-3 bg-sky-400 cursor-pointer text-white rounded-full">
                             <User />
                         </Link>
-                       )}
+                       {/* )} */}
                         
                         <MobileMenu/>
 

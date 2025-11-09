@@ -3,14 +3,14 @@ import { NextResponse } from "next/server";
 
 export async function GET(req: Request) {
     const { searchParams } = new URL(req.url);
-    const rating = searchParams.get("rating");
+    const name = searchParams.get("name");
     const priceMin = searchParams.get("priceMin");
     const priceMax = searchParams.get("priceMax");
 
-    const filters: any = [];
+    const filters: {name?: string; pricePerNight?: {gte?: number; lte?: number;}} []= [];
 
-    if (rating) {
-        filters.push({rating: {gte: Number(rating)}});
+    if (name) {
+        filters.push({name});
     }
     
     if (priceMin || priceMax) {
@@ -29,15 +29,15 @@ export async function GET(req: Request) {
     
 
     try {
-        const hotels = await prismadb.hotel.findMany({
+        const trips = await prismadb.trip.findMany({
             where: filters.length === 0 ? {} : {
                 AND: filters,
             }, 
             include: {
-                rooms: true,
+                tripHotels: true,
             },
         });
-        return NextResponse.json(hotels, { status: 200 });
+        return NextResponse.json(trips, { status: 200 });
     } catch (error) {
         return NextResponse.json({ message: "Something went wrong." }, { status: 500 });
     }

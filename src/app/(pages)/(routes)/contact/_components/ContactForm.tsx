@@ -25,8 +25,8 @@ const formSchema = z.object({
     email: z.string().email({
         message: "Please enter a valid email address.",
     }),
-    message: z.string().min(10, {
-        message: "Message must be at least 10 characters.",
+    message: z.string().min(4, {
+        message: "Message must be at least 4 characters.",
     }),
    recaptcha: z.string().min(1, "Please verify that you are not a robot."),
 })
@@ -53,6 +53,7 @@ const ContactForm = () => {
                 },
                 body: JSON.stringify({ ...values }),
             });
+            console.log("Form submitted successfully:", response);
             if (response.ok) {
                 form.reset();
             } else {

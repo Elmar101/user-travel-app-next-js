@@ -42,6 +42,7 @@
   --radius-lg: var(--radius);
   --radius-md: calc(var(--radius) - 2px);
   --radius-sm: calc(var(--radius) - 4px);
+  --background-hero-image: var(--background-hero-image);
 }
 
 /* Light mode dəyişənləri */
@@ -130,12 +131,13 @@
   body {
     @apply bg-background text-foreground;
   }
+  
 }
-
 /* Hero background üçün sinif */
-.hero-bg {
+@utility bg-heroBg {
   background-image: var(--background-hero-image);
 }
+
 
 /* Keyframes */
 @keyframes accordion-down {

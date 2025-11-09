@@ -16,13 +16,22 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 
 # Animations library -> use only client side => "use client" - de istifade edilir
-1. react-type-animation ("use client" - de istifade edilir)-> div lerin box larin cevrilmesi sayi artmasi get gel tipli isler
-2. frame-mention ("use client" - de istifade edilir)-> div leri hereket eletdirmekden , translate kimi ishlerde ve sair istifade edilir 
+1. react-type-animation ("use client" - de istifade edilir)-> Textin animationlarini yaradir. 
+  İstənilən mətni yazılırmış kimi göstərən yüngül React komponenti.
+  Istifade yeri: (travel/src/app/(pages)/(routes)/(home)/_components/SectionTwo.tsx)
+  “use client”: Bəli — animasiya DOM-a bağlıdır, serverdə işləmir.
+2. framer-motion ("use client" - de istifade edilir)-> div leri hereket eletdirmekden , translate kimi ishlerde 
+   ve sair istifade edilir 
+  Istifade Yeri: travel/src/app/(pages)/(routes)/(home)/_components/SectionOne.tsx
 3. anime js => ("use client" - de istifade edilir)-> "use client" - de istifade edilir
-4. react-intersection-observer -> "use client" - de istifade edilir scrolling ichin
-5. react-countup -> "use client" - de istifade edilir sayilarin profilinde artmasi icin
-6. react-fast-marquee -> "use client" - de istifade edilir infiniti sliderler icin
+4. react-intersection-observer -> "use client" - de  Elementin viewport-a düşməsini izləyir (scroll-based effektlər üçün).
+   Istifade Yeri: travel/src/app/(pages)/(routes)/about/_components/TravelStats.tsx
+5. react-countup -> "use client" - de istifade edilir Rəqəmlərin “sayılması” (0 → N) animasiyası.
+   Istifade Yeri: travel/src/app/(pages)/(routes)/about/_components/TravelStats.tsx
+6. react-fast-marquee -> "use client" - de istifade edilir mətn/loqo karuseli, infiniti sliderler icin
+   Istifade Yeri: travel/src/app/(pages)/(routes)/about/_components/CompanyLogos.tsx
 7. swiper js -> slider lar icin
+   Istifade Yeri: travel/src/app/(pages)/(routes)/(home)/_components/Hero.tsx
 
 
 # ReCAPTCHA ->  bun add react-google-recaptcha  -> recaptcha sayitina get ayarlari et secret key i env faylinda saxla
@@ -114,7 +123,7 @@ export default async function handler(req: any, res: any) {
 }
 
 ```
-
+* ``` bun run seed``` => seed faylinda yazilan kodlar databaseye elave olacaq
 5. ```bunx prisma db push | npx prisma db push``` => database push edmek
 6. ```bunx prisma studio | npx prisma studio``` => http://localhost:5555/ => database userleri daxil etmek update etmek silmek kimi isleri edecek tool
 
