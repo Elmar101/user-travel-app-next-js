@@ -5,12 +5,12 @@ export async function GET(req: Request) {
     const { searchParams } = new URL(req.url);
     const name = searchParams.get("name");
     const seats = searchParams.get("seats");
-    console.log('seats', seats);
+    ('seats', seats);
     
     const priceMin = searchParams.get("priceMin");
     const priceMax = searchParams.get("priceMax");
-    console.log('priceMin', priceMin);
-    console.log('priceMax', priceMax);
+    ('priceMin', priceMin);
+    ('priceMax', priceMax);
 
 
     const filters: {name?: string; seats?: {equals?: number}; pricePerNight?: {gte?: number; lte?: number;}} []= [];
@@ -34,7 +34,7 @@ export async function GET(req: Request) {
         }
         filters.push({pricePerNight: priceFilter});
     }
-   console.log('filters', filters);
+   ('filters', filters);
     try {
         const trips = await prismadb.rentaCar.findMany({
             where: filters.length === 0 ? {} : {

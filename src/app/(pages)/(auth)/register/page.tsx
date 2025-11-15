@@ -62,7 +62,7 @@ const RegisterPage = () => {
                 body: JSON.stringify(data),
             });
 
-            console.log(response)
+            (response)
 
             if(response.ok ===false){
                 const text= await response.text();

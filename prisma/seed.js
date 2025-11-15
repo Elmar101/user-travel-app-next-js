@@ -302,7 +302,7 @@
 //   await seedUsers();
 //   await seedTrips();
 
-//   console.log('✅ Seed finished.');
+//   ('✅ Seed finished.');
 // }
 
 // main()
@@ -712,7 +712,7 @@ async function main() {
   await seedTrips();
   await seedRentaCars();
 
-  console.log('✅ Seed finished.');
+  ('✅ Seed finished.');
 }
 
 main()
