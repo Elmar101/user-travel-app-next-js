@@ -11,7 +11,6 @@ const ProfilePage = () => {
   const router = useRouter();
   const { data: session, status } = useSession();
   const user = session?.user as User | undefined;
-  ("Session data:", session);
 
   useEffect(() => {
     if (status === "unauthenticated") {
