@@ -13,7 +13,7 @@ interface AuthLayoutProps {
 const AuthLayout = ({ children }: AuthLayoutProps) => {
 
     const router = useRouter();
-    // const { data: session, status } = useSession();
+    const { data: session, status } = useSession();
 
         
 
@@ -31,9 +31,9 @@ const AuthLayout = ({ children }: AuthLayoutProps) => {
         )
     }
 
-    // if (session) {
-    //     return null;
-    // }
+    if (session) {
+        return null;
+    }
 
     return (
         <div>

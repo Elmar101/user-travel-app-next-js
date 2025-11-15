@@ -56,13 +56,13 @@ const RegisterPage = () => {
         
 
         try {
-            const response = await fetch("/api/auth/register", {
+            const response = await fetch("/api/register", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(data),
             });
 
-            
+            console.log(response)
 
             if(response.ok ===false){
                 const text= await response.text();
@@ -172,7 +172,7 @@ const RegisterPage = () => {
 
 
                         <div className='flex flex-row items-center justify-between'>
-                            <Button type="submit">Register</Button>
+                            <Button type="submit" className='bg-orange-500 hover:bg-orange-600'>Register</Button>
 
                             <Link
                                 className="font-bold text-sm text-blue-500 hover:text-blue-800"

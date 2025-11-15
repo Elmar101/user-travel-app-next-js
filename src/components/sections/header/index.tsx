@@ -7,7 +7,7 @@ import MobileMenu from './MobileMenu';
 import { navigationLinks } from '@/constans';
 import SearchPage from './Search';
 import { usePathname } from 'next/navigation';
-// import { useSession } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 
 const Header = () => {
 
@@ -19,7 +19,7 @@ const Header = () => {
         { href: "#", icon: <Instagram size={16} /> },
     ];
 
-    // const { data: session, status } = useSession();
+    const { data: session, status } = useSession();
 
 
     return (
@@ -80,16 +80,16 @@ const Header = () => {
                     </nav>
                     <div className='flex items-center space-x-4'>
                        <SearchPage/>
-                       
-                       {/* {"session".length ? (
+
+                     {session?.user ? (
                         <Link  href="/profile" className="p-3 bg-red-400 cursor-pointer text-white rounded-full">
                             <UserPlus />
                         </Link>
-                       ):( */}
+                       ):( 
                         <Link  href="/login" className="p-3 bg-sky-400 cursor-pointer text-white rounded-full">
                             <User />
                         </Link>
-                       {/* )} */}
+                       )} 
                         
                         <MobileMenu/>
 

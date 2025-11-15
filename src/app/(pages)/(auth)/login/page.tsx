@@ -95,7 +95,7 @@ const LoginPage = () => {
               )}
             />
             <div className='flex flex-row items-center justify-between'>
-              <Button type="submit">Login</Button>
+              <Button type="submit" className='bg-orange-500 hover:bg-orange-600'>Login</Button>
 
               <Link
                 className="font-bold text-sm text-blue-500 hover:text-blue-800"
