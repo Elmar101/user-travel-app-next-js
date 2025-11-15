@@ -30,7 +30,6 @@ export async function POST(req: Request) {
               <p><strong>Message:</strong> ${message}</p>
             `,
           });
-          ("Email sent successfully:", emailResponse);
           return NextResponse.json({ message: "Message Success!", data: emailResponse }, { status: 200 });
     } catch (error) {
          console.error("Error sending email:", error);

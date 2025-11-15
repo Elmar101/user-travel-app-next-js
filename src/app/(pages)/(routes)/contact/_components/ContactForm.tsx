@@ -53,7 +53,6 @@ const ContactForm = () => {
                 },
                 body: JSON.stringify({ ...values }),
             });
-            ("Form submitted successfully:", response);
             if (response.ok) {
                 form.reset();
             } else {
