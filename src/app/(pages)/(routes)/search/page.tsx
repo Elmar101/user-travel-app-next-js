@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import Search from './_components/Search'
 
 const SearchPage = () => {
   return (
-    <div>
-        <Search/>
-    </div>
+   <Suspense fallback={<div>Axtarış nəticələri yüklənir...</div>}>
+      <Search/>
+    </Suspense>
   )
 }
 

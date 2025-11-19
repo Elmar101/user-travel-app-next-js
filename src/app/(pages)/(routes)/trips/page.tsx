@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import TripList from './_components/TripList'
 
 const TripsPage = () => {
   return (
     <div>
-      <TripList/>
+      <Suspense fallback={<div>Yüklənir...</div>}>
+        <TripList/>
+      </Suspense>
     </div>
   )
 }
