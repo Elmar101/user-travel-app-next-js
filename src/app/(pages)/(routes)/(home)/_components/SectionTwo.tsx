@@ -25,6 +25,7 @@ const SectionTwo = () => {
                         className='className="text-2xl lg:text-4xl font-bold text-blue-600 mb-4"'
                         repeat={Infinity}
                     />
+                    
                 
                 <div className="flex justify-center items-center mb-6">
                     <hr className="border-gray-300 w-1/5" />

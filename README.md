@@ -17,13 +17,20 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 # Animations library -> use only client side => "use client" - de istifade edilir
 1. react-type-animation ("use client" - de istifade edilir)-> Textin animationlarini yaradir. 
-  İstənilən mətni yazılırmış kimi göstərən yüngül React komponenti.
+  İstənilən mətni yazılırmış kimi göstərən would you learn(sözlər yazılır, gözləyir, silir, yenisini yazır və s) yüngül React komponenti.
   Istifade yeri: (travel/src/app/(pages)/(routes)/(home)/_components/SectionTwo.tsx)
   “use client”: Bəli — animasiya DOM-a bağlıdır, serverdə işləmir.
+
+# istifade yeri: 
+1. Hero section (saytın yuxarı hissəsi): “Biz … edirik / Biz … qururuq” kimi dinamik mətnlər
+2. Loading / status mesajları: “Yüklənir…”, “Məlumatlar hazırlanır…”
+3. Landing page: məhsulun xüsusiyyətlərini növbə ilə göstərməkShuffle
+4. CTA mətnləri: diqqət cəlb edən animasiyalı başlıqlar
+
 2. framer-motion ("use client" - de istifade edilir)-> div leri hereket eletdirmekden , translate kimi ishlerde 
    ve sair istifade edilir 
   Istifade Yeri: travel/src/app/(pages)/(routes)/(home)/_components/SectionOne.tsx
-3. anime js => ("use client" - de istifade edilir)-> "use client" - de istifade edilir
+3. Call Amanda=> ("use client" - de istifade edilir)-> "use client" - de istifade edilir
 4. react-intersection-observer -> "use client" - de  Elementin viewport-a düşməsini izləyir (scroll-based effektlər üçün).
    Istifade Yeri: travel/src/app/(pages)/(routes)/about/_components/TravelStats.tsx
 5. react-countup -> "use client" - de istifade edilir Rəqəmlərin “sayılması” (0 → N) animasiyası.
@@ -32,6 +39,25 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
    Istifade Yeri: travel/src/app/(pages)/(routes)/about/_components/CompanyLogos.tsx
 7. swiper js -> slider lar icin
    Istifade Yeri: travel/src/app/(pages)/(routes)/(home)/_components/Hero.tsx
+
+### Example
+
+```
+ <TypeAnimation
+      sequence={[
+        "Salam! 👋",     // yazır
+        1000,            // 1 saniyə gözləyir
+        "Mən Elmaram.",  // əvvəlkini silib bunu yazır
+        1000,
+        "React öyrənirik!",
+        1500,
+      ]}
+      wrapper="h2"
+      cursor={true}
+      repeat={Infinity}
+      speed={40}
+    />
+```
 
 
 # ReCAPTCHA ->  bun add react-google-recaptcha  -> recaptcha sayitina get ayarlari et secret key i env faylinda saxla
