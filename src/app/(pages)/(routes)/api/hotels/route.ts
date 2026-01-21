@@ -7,7 +7,7 @@ export async function GET(req: Request) {
     const priceMin = searchParams.get("priceMin");
     const priceMax = searchParams.get("priceMax");
 
-    const filters: any = [];
+    const filters: {rating?: {gte?: number}; pricePerNight?: {gte?: number; lte?: number;}} [] = [];
 
     if (rating) {
         filters.push({rating: {gte: Number(rating)}});
